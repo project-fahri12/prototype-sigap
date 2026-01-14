@@ -1,0 +1,98 @@
+[1] Calon Pendaftar
+   - Isi form online
+   - Dapat KODE PENDAFTARAN
+   - Status awal: "Calon Siswa"
+        |
+        v
+[2] Pendaftar Daftar Ulang via WA
+   - Kirim:
+       • Kode Pendaftaran
+       • Bukti Transfer (Lunas / Cicilan)
+        |
+        v
+[3] Admin Yayasan (Keuangan)
+   - Mencocokkan kode pendaftaran
+   - Verifikasi pembayaran
+   - Update status pembayaran:
+       • Belum Bayar
+       • Cicilan
+       • Lunas
+        |
+        v
+[4] Admin Lembaga (Akademik)
+   - Melihat pembayaran terverifikasi
+   - Mengubah status siswa:
+       • Siswa Aktif
+   - Menentukan kelas / rombel
+        |
+        v
+[5] Opsional: ambil santri yang berdomisili tetap
+   - Siswa mengajukan tinggal di asrama
+   - Admin asrama memverifikasi syarat
+   - Update status:
+       • Santri Aktif
+
+
+🔹 BISNIS LOGIC & HAK AKSES PER ROLE (TANPA PANITIA)
+1️⃣ SUPER ADMIN (YAYASAN)
+✅ Hak / Kuasa:
+
+Kelola Tahun Ajaran
+
+Kelola lembaga/unit
+
+Kelola user & hak akses
+
+Monitoring seluruh proses
+
+Melihat laporan lengkap (pembayaran, siswa, santri)
+
+❌ Larangan:
+
+Tidak memverifikasi siswa
+
+Tidak mengubah status pembayaran atau santri
+
+Tidak menghapus data pendaftar
+
+2️⃣ ADMIN KEUANGAN (YAYASAN)
+✅ Hak / Kuasa:
+
+Verifikasi pembayaran daftar ulang via WA
+
+Mengubah status pembayaran:
+
+Belum Bayar → Cicilan / Lunas
+
+Mencatat tanggal & nominal pembayaran
+
+Melihat data pendaftar
+
+❌ Larangan:
+
+Tidak memverifikasi siswa → status “Siswa Aktif”
+
+Tidak menentukan kelas / rombel
+
+Tidak mengubah status santri
+
+Tidak menghapus pendaftar
+
+
+
+4️⃣ ADMIN ASRAMA / PENGELOLA SANTRI (OPSIONAL)
+✅ Hak / Kuasa:
+
+Menyetujui pengajuan tinggal di asrama
+
+Mengubah status:
+
+Calon Santri → Santri Aktif
+
+Menentukan kamar / tempat tinggal
+
+❌ Larangan:
+
+Tidak mengubah status akademik
+
+Tidak mengubah

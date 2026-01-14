@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMA UNGGULAN TERPADU | Panel Kontrol Admin</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --p-green: #198754;
+            --bg-body: #f4f7f6;
+            --sidebar-w: 260px;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-body);
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* --- LAYOUT STRUCTURE --- */
+        .layout-wrapper {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: var(--sidebar-w);
+            background: white;
+            border-right: 1px solid #eef2f1;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1050;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 0 1rem 2rem 1rem;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav-custom .nav-link {
+            color: #64748b;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            transition: 0.2s;
+        }
+
+        .nav-custom .nav-link i {
+            width: 20px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .nav-custom .nav-link:hover,
+        .nav-custom .nav-link.active {
+            background: #f0fdf4;
+            color: var(--p-green);
+        }
+
+        .nav-custom .nav-link.active {
+            background: var(--p-green);
+            color: white;
+            box-shadow: 0 4px 12px rgba(25, 135, 84, 0.2);
+        }
+
+        .nav-header {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #cbd5e0;
+            margin: 20px 0 10px 15px;
+            letter-spacing: 1px;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            height: 100vh;
+        }
+
+        .content-body {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        /* --- CARDS --- */
+        .module-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #edf2f7;
+            margin-bottom: 20px;
+        }
+
+        /* --- MASTER SWITCH CARD --- */
+        .master-switch-card {
+            background: linear-gradient(45deg, #198754, #0f5132);
+            color: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-switch .form-check-input {
+            width: 3em;
+            height: 1.5em;
+            cursor: pointer;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                position: fixed;
+                left: calc(-1 * var(--sidebar-w));
+                height: 100vh;
+            }
+
+            .sidebar.is-active {
+                left: 0;
+            }
+
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1040;
+            }
+
+            .sidebar-overlay.is-active {
+                display: block;
+            }
+
+            .content-body {
+                padding: 1rem;
+            }
+
+            .master-switch-card h5 {
+                font-size: 1rem;
+            }
+        }
+
+        /* --- PERSENTASE CIRCLE --- */
+        .progress-compact {
+            width: 45px;
+            height: 45px;
+            border: 3px solid #f0fdf4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <div class="layout-wrapper">
+        <aside class="sidebar shadow-sm" id="mainSidebar">
+            <div class="sidebar-header">
+                <div class="d-flex align-items-center">
+                    <div class="bg-success text-white p-2 rounded-3 me-2">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold text-dark" style="font-size: 14px;">SMA UNGGULAN</h6>
+                        <small class="text-muted fw-bold" style="font-size: 9px;">ADMIN LEMBAGA</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-menu-container">
+                <nav class="nav-custom">
+
+                    <!-- Dashboard -->
+                    <a href="dashboard.html" class="nav-link ">
+                        <i class="fas fa-th-large"></i> Dashboard
+                    </a>
+
+                    <!-- Data Pendaftaran -->
+                    <div class="nav-header">Pendaftaran</div>
+                    <a href="monitoring-pendaftar.html" class="nav-link ">
+                        <i class="fas fa-file-signature"></i> Monitoring Pendaftar
+                    </a>
+                    <a href="aktivasi-siswa.html" class="nav-link ">
+                        <i class="fas fa-user-check"></i> Aktivasi Siswa Aktif
+                    </a>
+
+                    <!-- Manajemen Akademik -->
+                    <div class="nav-header">Manajemen Akademik</div>
+                    <a href="daftar-siswa-aktif.html" class="nav-link">
+                        <i class="fas fa-users"></i> Daftar Siswa Aktif
+                    </a>
+                    <a href="penentuan-rombel.html" class="nav-link">
+                        <i class="fas fa-chalkboard-teacher"></i> Penentuan Rombel
+                    </a>
+
+                    <!-- Data Master Akademik -->
+                    <div class="nav-header">Data Master Akademik</div>
+                    <!-- <a href="tahun-ajaran.html" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i> Tahun Ajaran
+                    </a> -->
+                    <a href="kelas.html" class="nav-link ">
+                        <i class="fas fa-school"></i> Kelas
+                    </a>
+                    <a href="rombel.html" class="nav-link active">
+                        <i class="fas fa-layer-group"></i> Rombel
+                    </a>
+
+                    <!-- Informasi (Read Only) -->
+                    <div class="nav-header">Informasi</div>
+                    <a href="gelombang.html" class="nav-link">
+                        <i class="fas fa-wave-square"></i> Informasi Gelombang
+                    </a>
+                    <a href="kuota-unit.html" class="nav-link">
+                        <i class="fas fa-chart-pie"></i> Kuota Unit
+                    </a>
+
+                    <!-- Laporan -->
+                    <div class="nav-header">Laporan Akademik</div>
+                    <a href="laporan-akademik.html" class="nav-link">
+                        <i class="fas fa-file-alt"></i> Laporan Akademik
+                    </a>
+
+                    <div style="height: 20px;"></div>
+                </nav>
+            </div>
+
+        </aside>
+
+        <main class="main-content">
+            <header class="navbar navbar-expand bg-white px-3 shadow-sm">
+                <button class="btn btn-light d-lg-none me-2" onclick="toggleSidebar()">
+                    <i class="fas fa-bars text-success"></i>
+                </button>
+                <div class="d-flex align-items-center">
+                    <h6 class="mb-0 fw-800 text-dark d-none d-sm-block">SMA UNGGULAN TERPADU</h6>
+                    <span class="badge bg-success-subtle text-success ms-3 d-none d-md-inline">TA 2025/2026</span>
+                </div>
+
+                <div class="ms-auto d-flex align-items-center">
+                    <div class="text-end me-2 d-none d-md-block">
+                        <small class="d-block fw-bold lh-1">Junaidi, S.Pd</small>
+                        <small class="text-muted" style="font-size: 10px;">Admin Unit</small>
+                    </div>
+                    <img src="https://ui-avatars.com/api/?name=Junaidi&background=198754&color=fff"
+                        class="rounded-circle border border-2 border-success-subtle" width="35">
+                </div>
+            </header>
+
+            <div class="content-body" style="background: #f8fafc; min-height: 100vh; padding: 2rem;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-800 text-dark mb-1">Master Rombongan Belajar (Rombel)</h4>
+            <p class="small text-muted mb-0">Kelola kuota, kategori, dan wali kelas untuk penempatan siswa aktif.</p>
+        </div>
+        <button class="btn btn-primary btn-sm px-4 fw-bold shadow-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#modalTambahRombel">
+            <i class="fas fa-plus me-2"></i> Tambah Rombel
+        </button>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 table-hover">
+                <thead class="bg-light">
+                    <tr style="font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 1px;">
+                        <th class="ps-4 py-3" style="width: 50px;">ID</th>
+                        <th>Nama Rombel</th>
+                        <th>Kapasitas</th>
+                        <th>Jenis</th>
+                        <th>Wali Kelas</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size: 14px;">
+                    <tr>
+                        <td class="ps-4 text-muted fw-bold">1</td>
+                        <td>
+                            <div class="fw-800 text-dark">7A</div>
+                            <small class="text-muted text-uppercase" style="font-size: 10px;">Kelas ID: 1</small>
+                        </td>
+                        <td class="fw-bold text-dark">32 <small class="text-muted fw-normal">Siswa</small></td>
+                        <td><span class="badge bg-secondary-subtle text-secondary px-3 py-1 rounded-pill">Campur</span></td>
+                        <td class="fw-600 text-dark">Ust. Ahmad</td>
+                        <td><span class="badge bg-success text-white rounded-pill px-3" style="font-size: 10px;">Aktif</span></td>
+                        <td class="text-end pe-4">
+                            <button class="btn btn-light btn-sm rounded-3 text-primary"><i class="fas fa-edit"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ps-4 text-muted fw-bold">2</td>
+                        <td>
+                            <div class="fw-800 text-dark">7B</div>
+                            <small class="text-muted text-uppercase" style="font-size: 10px;">Kelas ID: 1</small>
+                        </td>
+                        <td class="fw-bold text-dark">32 <small class="text-muted fw-normal">Siswa</small></td>
+                        <td><span class="badge bg-secondary-subtle text-secondary px-3 py-1 rounded-pill">Campur</span></td>
+                        <td class="fw-600 text-dark">Ust. Budi</td>
+                        <td><span class="badge bg-success text-white rounded-pill px-3" style="font-size: 10px;">Aktif</span></td>
+                        <td class="text-end pe-4">
+                            <button class="btn btn-light btn-sm rounded-3 text-primary"><i class="fas fa-edit"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ps-4 text-muted fw-bold">3</td>
+                        <td>
+                            <div class="fw-800 text-dark">7 Tahfidz</div>
+                            <small class="text-muted text-uppercase" style="font-size: 10px;">Kelas ID: 1</small>
+                        </td>
+                        <td class="fw-bold text-dark">28 <small class="text-muted fw-normal">Siswa</small></td>
+                        <td><span class="badge bg-primary-subtle text-primary px-3 py-1 rounded-pill">Putra</span></td>
+                        <td class="fw-600 text-dark">Ust. Hasan</td>
+                        <td><span class="badge bg-success text-white rounded-pill px-3" style="font-size: 10px;">Aktif</span></td>
+                        <td class="text-end pe-4">
+                            <button class="btn btn-light btn-sm rounded-3 text-primary"><i class="fas fa-edit"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalTambahRombel" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 28px; overflow: hidden;">
+            
+            <div class="modal-header border-0 bg-primary p-4">
+                <div class="d-flex align-items-center">
+                    <div class="bg-white bg-opacity-20 rounded-3 p-2 me-3">
+                        <i class="fas fa-layer-group text-white fs-4"></i>
+                    </div>
+                    <div>
+                        <h5 class="modal-title fw-800 text-white mb-0">Tambah Rombel Baru</h5>
+                        <small class="text-white-50">Silahkan lengkapi data rombongan belajar</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal"></button>
+            </div>
+            
+            <form>
+                <div class="modal-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="small fw-800 text-muted mb-2 text-uppercase letter-spacing-1">Pilih Master Kelas</label>
+                            <select class="form-select border-2 bg-light border-light py-2 px-3 fw-bold rounded-3 shadow-none">
+                                <option value="" disabled selected>-- Pilih Tingkatan Kelas --</option>
+                                <option value="1">Kelas 7</option>
+                                <option value="2">Kelas 8</option>
+                                <option value="3">Kelas 10</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="small fw-800 text-muted mb-2 text-uppercase letter-spacing-1">Nama Rombel</label>
+                            <input type="text" class="form-control border-2 bg-light border-light py-2 px-3 fw-bold rounded-3 shadow-none" placeholder="Misal: 7A">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="small fw-800 text-muted mb-2 text-uppercase letter-spacing-1">Kapasitas</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control border-2 bg-light border-light py-2 px-3 fw-bold rounded-3 shadow-none" placeholder="32">
+                                <span class="input-group-text border-2 bg-light border-light small text-muted">Siswa</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="small fw-800 text-muted mb-2 text-uppercase letter-spacing-1">Jenis</label>
+                            <select class="form-select border-2 bg-light border-light py-2 px-3 fw-bold rounded-3 shadow-none">
+                                <option>Campur</option>
+                                <option>Putra</option>
+                                <option>Putri</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="small fw-800 text-muted mb-2 text-uppercase letter-spacing-1">Wali Kelas</label>
+                            <input type="text" class="form-control border-2 bg-light border-light py-2 px-3 fw-bold rounded-3 shadow-none" placeholder="Nama Guru">
+                        </div>
+
+                        <div class="col-12 mt-2">
+                            <div class="p-3 bg-light rounded-4 border-dashed border-2 text-center">
+                                <label class="small fw-800 text-muted mb-2 d-block">STATUS ROMBEL</label>
+                                <div class="d-flex justify-content-center gap-4">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="status" id="aktif" checked>
+                                        <label class="form-check-label fw-bold text-success" for="aktif">Aktif</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="status" id="nonaktif">
+                                        <label class="form-check-label fw-bold text-danger" for="nonaktif">Non-Aktif</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0 p-4 pt-0">
+                    <div class="d-grid w-100 gap-2">
+                        <button type="submit" class="btn btn-primary fw-800 py-3 rounded-4 shadow-sm">
+                            <i class="fas fa-save me-2"></i> Simpan Data Rombel
+                        </button>
+                        <button type="button" class="btn btn-link text-muted text-decoration-none fw-bold small" data-bs-dismiss="modal">Batalkan</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+            
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleSidebar() {
+            document.getElementById('mainSidebar').classList.toggle('is-active');
+            document.getElementById('sidebarOverlay').classList.toggle('is-active');
+        }
+    </script>
+</body>
+
+</html>

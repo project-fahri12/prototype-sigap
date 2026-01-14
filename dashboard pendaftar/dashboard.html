@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard PPDB | Status Berkas</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --p-green: #198754;
+            --bg-body: #f4f7f6;
+            --sidebar-w: 260px;
+            /* Status Colors */
+            --s-belum: #6c757d;
+            --s-proses: #0dcaf0;
+            --s-invalid: #dc3545;
+            --s-valid: #198754;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-body);
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- LAYOUT --- */
+        .layout-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-w);
+            background: white;
+            border-right: 1px solid #eef2f1;
+            position: fixed;
+            height: 100vh;
+            transition: all 0.3s ease;
+            z-index: 1050;
+            left: 0;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-w);
+            flex-grow: 1;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        /* --- COMPONENTS --- */
+        .module-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #edf2f7;
+            margin-bottom: 20px;
+        }
+
+        .fw-800 { font-weight: 800; }
+
+        /* Status Badge Styling */
+        .badge-status {
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .st-belum { background: #f8f9fa; color: var(--s-belum); border: 1px solid #dee2e6; }
+        .st-proses { background: #e0f7fa; color: var(--s-proses); border: 1px solid #b2ebf2; }
+        .st-invalid { background: #fff5f5; color: var(--s-invalid); border: 1px solid #feb2b2; }
+        .st-valid { background: #f0fdf4; color: var(--s-valid); border: 1px solid #bbf7d0; }
+
+        /* Upload Item Box */
+        .upload-box {
+            text-align: center;
+            padding: 20px 10px;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            transition: 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: white;
+        }
+
+        .upload-box:hover {
+            border-color: var(--p-green);
+            background: #fcfdfd;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .doc-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #cbd5e0;
+        }
+
+        .doc-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: #4a5568;
+            margin-bottom: 15px;
+            min-height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                left: calc(-1 * var(--sidebar-w));
+            }
+
+            .sidebar.is-active {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+            
+            /* Overlay saat sidebar aktif di mobile */
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 1040;
+            }
+            .sidebar-overlay.is-active { display: block; }
+        }
+
+        @media (min-width: 1200px) {
+            .col-xl-2-4 {
+                flex: 0 0 auto;
+                width: 20%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <div class="layout-wrapper">
+        <aside class="sidebar shadow-sm" id="mainSidebar">
+            <div class="p-4 d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center text-success fw-800">
+                    <i class="fas fa-mosque me-2"></i> PPDB SYSTEM
+                </div>
+                <button class="btn d-lg-none" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="px-3">
+                <a href="#" class="nav-link bg-success text-white p-3 rounded-3 shadow-sm mb-2">
+                    <i class="fas fa-th-large me-2"></i> Dashboard
+                </a>
+                <hr>
+                <a href="/login-pendaftar.html" class="nav-link text-danger p-3 small"><i class="fas fa-power-off me-2"></i> Keluar</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="navbar navbar-expand bg-white px-4 py-3 border-bottom sticky-top">
+                <button class="btn btn-light d-lg-none me-3" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h6 class="mb-0 fw-800">Dashboard Pendaftar</h6>
+
+                <div class="ms-auto d-flex align-items-center">
+                    <div class="d-flex align-items-center" role="button" data-bs-toggle="modal" data-bs-target="#modalProfil" style="cursor: pointer;">
+                        <div class="text-end me-3 d-none d-sm-block">
+                            <p class="mb-0 small fw-bold text-dark">Muhammad Alfatih</p>
+                            <p class="mb-0 text-success fw-bold" style="font-size: 10px;">ID: 26001001 <i class="fas fa-chevron-down ms-1"></i></p>
+                        </div>
+                        <img src="https://ui-avatars.com/api/?name=M+Alfatih&background=198754&color=fff" class="rounded-circle border border-2 border-success-subtle" width="38">
+                    </div>
+                </div>
+            </header>
+
+            <section class="p-4">
+                <div class="module-card bg-success text-white border-0 shadow-sm">
+                    <h6 class="fw-bold"><i class="fas fa-info-circle me-2"></i>Petunjuk Verifikasi Berkas</h6>
+                    <p class="small mb-0 opacity-75">Perhatikan label status pada setiap kotak. Jika status <b>Invalid</b>, silakan unggah ulang berkas yang lebih jelas sesuai catatan admin.</p>
+                </div>
+
+                <div class="module-card">
+                    <div class="row g-3" id="documentGrid">
+                        </div>
+                </div>
+
+                <div class="module-card border-danger bg-light">
+                    <h6 class="text-danger fw-bold small"><i class="fas fa-exclamation-triangle me-2"></i>Catatan Perbaikan dari Admin:</h6>
+                    <p class="text-muted small mb-0">"Scan Akta Kelahiran Anda buram, silakan upload foto asli yang lebih jelas."</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal fade" id="modalProfil" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+                <div class="modal-header border-0 pb-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center pb-4">
+                    <img src="https://ui-avatars.com/api/?name=M+Alfatih&background=198754&color=fff&size=128" class="rounded-circle mb-3 shadow-sm border border-4 border-white" width="100">
+                    <h5 class="fw-800 mb-1">Muhammad Alfatih</h5>
+                    <span class="badge bg-success-subtle text-success mb-4 px-3 py-2 rounded-pill">Calon Santri Baru</span>
+                    <div class="text-start bg-light p-3 rounded-4 mx-2">
+                        <div class="row g-3">
+                            <div class="col-12 border-bottom pb-2">
+                                <label class="text-muted d-block small mb-1">Pilihan Sekolah</label>
+                                <span class="fw-bold"><i class="fas fa-school me-2 text-success"></i> SMA Unggulan Terpadu</span>
+                            </div>
+                            <div class="col-12">
+                                <label class="text-muted d-block small mb-1">Pilihan Pondok/Asrama</label>
+                                <span class="fw-bold"><i class="fas fa-mosque me-2 text-success"></i> Pondok Pesantren Tahfidz Al-Manshur</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 justify-content-center pt-0">
+                    <button type="button" class="btn btn-light fw-bold px-4 rounded-pill" data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-success fw-bold px-4 rounded-pill">Edit Profil</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Render Data Berkas secara dinamis (Lebih bersih daripada document.write)
+        const docs = [
+            { n: "Formulir Daftar", i: "fa-file-signature", s: "valid", label: "Valid" },
+            { n: "Kartu Keluarga (KK)", i: "fa-users", s: "proses", label: "Verifikasi" },
+            { n: "Akta Kelahiran", i: "fa-baby", s: "invalid", label: "Invalid" },
+            { n: "Pas Foto 3x4", i: "fa-user-tie", s: "valid", label: "Valid" },
+            { n: "KTP Ortu/Wali", i: "fa-id-card", s: "belum", label: "Belum" },
+            { n: "Rapor Sekolah", i: "fa-book", s: "belum", label: "Belum" },
+            { n: "Ijazah / SKL", i: "fa-certificate", s: "belum", label: "Belum" },
+            { n: "NISN", i: "fa-fingerprint", s: "belum", label: "Belum" },
+            { n: "Sertifikat Prestasi", i: "fa-trophy", s: "belum", label: "Belum" },
+            { n: "Kartu PKH/Bantuan", i: "fa-hand-holding-heart", s: "belum", label: "Belum" }
+        ];
+
+        const grid = document.getElementById('documentGrid');
+        docs.forEach(doc => {
+            const html = `
+                <div class="col-6 col-md-4 col-xl-2-4">
+                    <div class="upload-box shadow-sm">
+                        <div>
+                            <span class="badge-status st-${doc.s}">${doc.label}</span>
+                            <div class="doc-icon"><i class="fas ${doc.i}"></i></div>
+                            <div class="doc-name">${doc.n}</div>
+                        </div>
+                        <button class="btn btn-sm ${doc.s === 'valid' ? 'btn-success' : 'btn-outline-success'} w-100 fw-bold" style="font-size: 10px;">
+                            ${doc.s === 'valid' ? '<i class="fas fa-eye"></i> LIHAT FILE' : '<i class="fas fa-upload"></i> UPLOAD'}
+                        </button>
+                    </div>
+                </div>`;
+            grid.innerHTML += html;
+        });
+
+        // Sidebar Toggle Logic
+        function toggleSidebar() {
+            const sidebar = document.getElementById('mainSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('is-active');
+            overlay.classList.toggle('is-active');
+        }
+    </script>
+</body>
+</html>

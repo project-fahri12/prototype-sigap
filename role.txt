@@ -1,0 +1,162 @@
+🔑 KONSEP FINAL (TANPA TES, DAFTAR ULANG VIA WA)
+🎯 Prinsip Utama
+
+Semua pendaftar diterima sebagai siswa
+
+Pembayaran & daftar ulang jadi kunci AKTIF
+
+Status diubah manual oleh admin berdasarkan kode pendaftaran
+
+1️⃣ ROLE & TUGAS (FINAL)
+🏢 SUPER ADMIN (YAYASAN)
+
+Kelola Tahun Ajaran
+
+Kelola biaya
+
+Kelola user & hak akses
+
+Monitoring laporan
+
+❌ Tidak operasional harian
+
+💰 ADMIN KEUANGAN (YAYASAN)
+
+Menerima chat WA daftar ulang
+
+Cocokkan Kode Pendaftaran
+
+Update status pembayaran:
+
+Belum Bayar
+
+Cicilan
+
+Lunas
+
+Input nominal & tanggal
+
+❗ Role ini paling penting di kondisi kamu
+
+🏫 ADMIN LEMBAGA
+
+Melihat data pendaftar
+
+Mengaktifkan siswa SETELAH pembayaran
+
+Menentukan kelas / rombel
+
+Status yang diubah:
+
+Siswa Aktif
+
+🧾 PANITIA
+
+(Opsional)
+
+Hanya cek kelengkapan data awal
+
+Tidak wajib jika semua manual
+
+2️⃣ ALUR PROSES (VERSI NYATA LAPANGAN)
+
+Pendaftar isi form online
+➜ dapat Kode Pendaftaran
+
+Status otomatis:
+➜ Calon Siswa
+
+Pendaftar daftar ulang via WA
+➜ kirim:
+
+Kode Pendaftaran
+
+Bukti transfer
+
+Admin Keuangan:
+
+Cari data via Kode
+
+Set status:
+
+Cicilan atau Lunas
+
+Jika Lunas / Cicilan diterima:
+
+Admin Lembaga ubah:
+➜ Siswa Aktif
+
+(Opsional) Pengajuan asrama:
+➜ Santri Aktif
+
+3️⃣ STATUS YANG WAJIB ADA (MINIMAL)
+Status Akademik
+
+Calon Siswa
+
+Siswa Aktif
+
+Status Pembayaran
+
+Belum Bayar
+
+Cicilan
+
+Lunas
+
+Status Santri (opsional)
+
+Non Santri
+
+Santri Aktif
+
+4️⃣ FORMAT KODE PENDAFTARAN (SARAN)
+
+Contoh:
+
+YYS-2026-MTS-00123
+
+
+Isi:
+
+Yayasan
+
+Tahun
+
+Lembaga
+
+Nomor urut
+
+👉 Supaya admin WA cepat cari data
+
+5️⃣ ATURAN PENTING (RULE SEDERHANA)
+
+✔ Semua diterima
+✔ Pembayaran menentukan AKTIF
+✔ Cicilan boleh → tetap aktif
+✔ Semua perubahan berdasarkan kode pendaftaran
+✔ Tidak perlu tes / seleksi
+
+6️⃣ KESIMPULAN
+
+Dengan model ini:
+
+Cocok untuk sistem manual + WA
+
+Tidak ribet
+
+Realistis
+
+Bisa dikembangkan ke sistem otomatis nanti
+
+Kalau kamu mau, saya bisa bantu:
+
+Buatkan SOP Admin WA
+
+Buatkan format chat WA pendaftar
+
+Buatkan rule di sistem (if–else)
+
+Buatkan contoh database ringan
+
+Tinggal bilang 👉 lanjut ke mana 😊
